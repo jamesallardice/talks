@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>An Introduction to AngularJS</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../assets/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="../assets/reveal.js/css/theme/beige.css" id="theme">
+        <style>
+            .reveal h1 img {
+                border: none;
+                box-shadow: none;
+                background: none;
+                position: absolute;
+                margin-left: -150px;
+                top: 0;
+            }
+            .reveal li {
+                padding: 10px 0;
+            }
+            .reveal .live-example {
+                padding: 20px 0;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.6);
+                font-size: 75%;
+            }
+            .reveal .live-example input {
+                height: 30px;
+                width: 250px;
+                vertical-align: middle;
+                font-size: 75%;
+            }
+            .reveal .live-example p {
+                margin-top: 20px;
+            }
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="../assets/reveal.js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../assets/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+
+        <!--[if lt IE 9]>
+            <script src="../assets/reveal.js/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>
+                        <img src="../assets/images/angularjs.png" alt="AngularJS">
+                        AngularJS
+                    </h1>
+                    <h3>A basic introduction</h3>
+                    <p>
+                        <small>By <a href="http://jamesallardice.com">James Allardice</a> / <a href="http://twitter.com/james_allardice">@james_allardice</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>What is AngularJS?</h2>
+                    <ul>
+                        <li>MVW - Model, View, Whatever</li>
+                        <li>Extends native HTML</li>
+                        <li>Automatic view-model syncronization</li>
+                        <li>
+                            <q cite="https://github.com/angular/angular.js/blob/master/README.md">
+                                &ldquo;It makes development fun!&rdquo;
+                            </q>
+                        </li>
+                    </ul>
+
+                    <aside class="notes">
+                        <p>
+                            AngularJS is billed as a "Model, View, Whatever" framework for front-end web development. It's designed to let developers focus on building great apps, following separation of concerns, without having to argue about the benefits of MVC vs. MVVM and so on.
+                        </p>
+                        <p>
+                            It extends HTML at runtime, allowing you to use Jade, HAML or whatever you prefer to actually write your views.
+                        </p>
+                        <p>
+                            It offers 2-way data binding which means your model and view automatically stay in sync. If your model changes, your view changes instantly. There's no need for page reloads. We'll see some examples of this soon.
+                        </p>
+                        <p>
+                            And in the words of the documentation, "it makes development fun". It abstracts away a lot of the pain of dealing with the DOM and AJAX. By wrapping native browser APIs in its own functions it allows you to write front-end JavaScript the way it would probably be done had it been invented today.
+                        </p>
+                    </aside>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Setting up an AngularJS app</h2>
+                        <ul>
+                            <li>
+                                Directives - <q cite="http://docs.angularjs.org/guide/directive">&ldquo;Teach HTML new tricks&rdquo;</q>
+                            </li>
+                            <li>
+                                <code>ng-app</code> attribute tells AngularJS to parse the DOM
+                            </li>
+                        </ul>
+
+                        <aside class="notes">
+                            <p>
+                                A major concept in Angular is that of "directives", which are used to "teach HTML new tricks". When Angular parses the DOM it finds directives and executes the relevant code. There are several different ways to write directives, but the two most often seen are "attribute" and "element" directives. That is, custom attributes that can be added to existing elements, and completely new custom elements.
+                            </p>
+                            <p>
+                                The first directive you'll come across will likely be "ng-app", an attribute directive that simply tells Angular that it should be active in that portion of the page. It will parse the DOM fragment contained within any element with an "ng-app" directive.
+                            <p>
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>A simple demo</h2>
+                        <pre><code data-trim>
+&lt;!doctype html>
+&lt;html ng-app>
+    &lt;head>
+        &lt;script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js">&lt;/script>
+    &lt;/head>
+    &lt;body>
+        <label>
+            Name:
+            <input ng-model="yourName">
+        </label>
+        <p>Hello {{yourName}}</p>
+    &lt;/body>
+&lt;/html>
+                        </code></pre>
+                        <div ng-app class="live-example">
+                            <label>
+                                Name:
+                                <input ng-model="yourName">
+                            </label>
+                            <p>Hello {{yourName}}</p>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Setting up an AngularJS app</h2>
+                        <ul>
+                            <li>
+                                Directives - <q cite="http://docs.angularjs.org/guide/directive">&ldquo;Teach HTML new tricks&rdquo;</q>
+                            </li>
+                            <li>
+                                <code>ng-app</code> attribute tells AngularJS to parse the DOM
+                            </li>
+                            <li>
+                                <code>ng-model</code> attribute creates a 2-way data binding
+                            </li>
+                            <li>{{interpolated}} expressions create "watches"</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <p>
+                                In that example we saw the "ng-app" directive mentioned previously. It was applied to the "html" element, which means Angular will be active for the whole page. We also saw the "ng-model" directive, which is used to create a 2-way data binding. In that example, it effectively binds the value of the input element to a property of the model called "yourName".
+                            </p>
+                            <p>
+                                We also saw another key concept - string interpolation. Angular uses double curly braces as interpolation delimiters, and the expression contained within them is used to set up a "watch" on the corresponding property of the model. Watches, fairly obviously, "watch" the value of the model for changes, which means any time the value in the model changes, the view is updated automatically.
+                            </p>
+                        </aside>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Introducing Controllers</h2>
+                </section>
+
+                <section>
+                    <h1>Questions?</h1>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="../assets/reveal.js/lib/js/head.min.js"></script>
+        <script src="../assets/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+            Reveal.initialize({
+                history: true,
+                dependencies: [
+                    { 
+                        src: "../assets/reveal.js/lib/js/classList.js", condition: function () {
+                            return !document.body.classList;
+                        } 
+                    },
+                    {
+                        src: "../assets/reveal.js/plugin/highlight/highlight.js",
+                        async: true,
+                        callback: function () {
+                            hljs.initHighlightingOnLoad();
+                        }
+                    },
+                    {
+                        src: "../assets/reveal.js/plugin/notes/notes.js",
+                        async: true,
+                        condition: function () {
+                            return !!document.body.classList;
+                        }
+                    }
+                ]
+            });
+        </script>
+
+    </body>
+</html>
