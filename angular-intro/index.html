@@ -54,7 +54,7 @@
             <script src="../assets/reveal.js/lib/js/html5shiv.js"></script>
         <![endif]-->
     </head>
-    <body>
+    <body ng-app="DemoApp">
         <div class="reveal">
             <div class="slides">
                 <section>
@@ -135,12 +135,12 @@
     &lt;/body>
 &lt;/html>
                         </code></pre>
-                        <div ng-app class="live-example">
+                        <div class="live-example">
                             <label>
                                 Name:
                                 <input ng-model="yourName">
                             </label>
-                            <p>Hello {{yourName}}</p>
+                            <p>Hello {{{yourName}}}</p>
                         </div>
                     </section>
                     <section>
@@ -156,6 +156,7 @@
                                 <code>ng-model</code> attribute creates a 2-way data binding
                             </li>
                             <li>{{interpolated}} expressions create "watches"</li>
+                            <li>Scope!</li>
                         </ul>
 
                         <aside class="notes">
@@ -165,12 +166,86 @@
                             <p>
                                 We also saw another key concept - string interpolation. Angular uses double curly braces as interpolation delimiters, and the expression contained within them is used to set up a "watch" on the corresponding property of the model. Watches, fairly obviously, "watch" the value of the model for changes, which means any time the value in the model changes, the view is updated automatically.
                             </p>
+                            <p>
+                                This example also demonstrated one of the most important Angular concepts - scope. This example only shows one, known as the root scope. Models are just properties of scope objects. More on this later.
+                            </p>
                         </aside>
                     </section>
                 </section>
 
                 <section>
-                    <h2>Introducing Controllers</h2>
+                    <h2>Introducing Modules</h2>
+                    <ul>
+                        <li>Break up application functionality</li>
+                        <li>Use the global <code>angular</code> object:</li>
+                        <li>
+                            <pre><code data-trim>
+var module = angular.module("MyApp", []);
+                            </code></pre>
+                        </li>
+                        <li>And give a value to the <code>ng-app</code> directive</li>
+                        <li>
+                            <pre><code data-trim>
+&lt;html ng-app="MyApp"> <!-- ... etc ... -->
+                            </code></pre>
+                        </li>
+                        <li>Can be "required" (injected)</li>
+                    </ul>
+
+                    <aside class="notes">
+                        <p>
+                            Our first example was not very modular. Angular was designed with modularity and testability in mind from the start. Breaking your application up into smaller chunks makes it easy to build re-usable components and test them in isolation.
+                        </p>
+                        <p>
+                            The library exposes a single global object, "angular". We can use this to create new modules as shown. The name given to a module can then be used as the value of an "ng-app" directive. This will tell Angular what to actually do with the special elements and attributes it encounters within that DOM fragment.
+                        </p>
+                        <p>
+                            Modules can "require" other modules
+                    </aside>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Introducing Controllers</h2>
+                        <ul>
+                            <li>Augment scope instances with state and behaviour</li>
+                            <li>Attached to views via <code>ng-controller</code> directive</li>
+                            <li>Directive introduces new scope to augment</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Adding behaviour to our demo</h2>
+                        <pre><code data-trim>
+&lt;!doctype html>
+&lt;html ng-app="MyApp" ng-controller="AppCtrl">
+    &lt;head>
+        &lt;script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js">&lt;/script>
+    &lt;/head>
+    &lt;body>
+        <label>
+            Name:
+            <input ng-model="yourName">
+        </label>
+        <button ng-click="sayHi()">Say 'Hi' to {{yourName}}</button>
+    &lt;/body>
+&lt;/html>
+                        </code></pre>
+                        <pre><code data-trim>
+angular.module("MyApp", []).controller("AppCtrl", function ($scope) {
+    $scope.yourName = "James"; // Initial state
+    $scope.sayHi = function () { // Behaviour
+        alert("Hi " + $scope.yourName);
+    };
+});
+                        </code></pre>
+                        <div ng-controller="DemoCtrl1" class="live-example">
+                            <label>
+                                Name:
+                                <input ng-model="yourName">
+                            </label>
+                            <button ng-click="sayHi()">Say 'Hi' to {{{yourName}}}</button>
+                        </div>
+                    </section>
                 </section>
 
                 <section>
@@ -208,6 +283,15 @@
                         }
                     }
                 ]
+            });
+
+            angular.module("DemoApp", [], function ($interpolateProvider) {
+                $interpolateProvider.startSymbol("{{{").endSymbol("}}}");
+            }).controller("DemoCtrl1", function ($scope) {
+                $scope.yourName = "James";
+                $scope.sayHi = function () {
+                    alert("Hi " + $scope.yourName);
+                };
             });
         </script>
 
