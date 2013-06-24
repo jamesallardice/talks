@@ -249,6 +249,33 @@ angular.module("MyApp", []).controller("AppCtrl", function ($scope) {
                 </section>
 
                 <section>
+                    <h2>Dependency injection</h2>
+                    <ul>
+                        <li>Appears to be magic at first glance:</li>
+                    </ul>
+                    <pre><code data-trim class="javascript">
+var app = angular.module("Demo", []);
+app.controller("DemoCtrl", function ($scope, $http) {
+   // How does it know what $scope and $http are? 
+});
+                    </code></pre>
+                    <ul>
+                        <li>Parses <code>Function.prototype.toString</code></li>
+                        <li>Can't be minified, so use array syntax:</li>
+                    </ul>
+                    <pre><code data-trim class="javascript">
+var app = angular.module("Demo", []);
+app.controller("DemoCtrl", ["$scope", "$http", function ($s, $h) {
+   // Much clearer where those arguments come from
+}]);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Custom directives</h2>
+                </section>
+
+                <section>
                     <h1>Questions?</h1>
                 </section>
 
