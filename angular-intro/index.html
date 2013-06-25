@@ -272,7 +272,60 @@ app.controller("DemoCtrl", ["$scope", "$http", function ($s, $h) {
                 </section>
 
                 <section>
-                    <h2>Custom directives</h2>
+                    <section>
+                        <h2>Custom directives</h2>
+                        <ul>
+                            <li>Add your own elements/attributes</li>
+                            <li>More semantic markup</li>
+                            <li>Easy for front-end developers</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <p>
+                                A major selling point of Angular is the ability to create custom directives. This means we can build completely new elements that can make our markup more semantic, and make our views much simpler. This makes the job of front-end developers much easier - it's often possible to write a single custom tag instead of 10, and let the Angular app handle the rest.
+                            </p>
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>A custom directive example</h2>
+                        <pre><code data-trim class="javascript">
+angular.module("MyApp", []).directive("loginForm", function () {
+    return {
+        restrict: "E", // Element directive
+        replace: true,
+        template: "&lt;form method='post' action='/login'> \
+                       Email: &lt;input name='email'> \
+                       Password: &lt;input name='email' type='password'> \
+                       &lt;input type='submit' value='Login'> \
+                   &lt;/form>"
+    };
+});
+                        </code></pre>
+                        <pre><code data-trim class="html">
+&lt;div ng-app="MyApp">
+    &lt;login-form>&lt;/login-form>
+&lt;/div>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Custom directives</h2>
+                        <ul>
+                            <li>Add your own elements/attributes</li>
+                            <li>More semantic markup</li>
+                            <li>Easy for front-end developers</li>
+                            <li>Markup in JavaScript... not so good</li>
+                            <li>Can use <code>templateURL</code> instead</li>
+                        </ul>
+
+                        <aside class="notes">
+                            <p>
+                                That example showed us the power of directives from the point of view of someone who has to write markup. But it's not great from a separation-of-concerns perspective. The markup is contained within the JavaScript, which is generally frowned upon.
+                            </p>
+                            <p>
+                                This problem can be mitigated by using the "templateURL" property, instead of "template", and storing directive templates as plain markup. But this introduces a hit to performance as extra HTTP requests are needed to load the template contents. This is one of the downsides to Angular, but it does implement a very good caching system in an attempt to reduce the effect.
+                            </p>
+                        </aside>
+                    </section>
                 </section>
 
                 <section>
