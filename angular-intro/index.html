@@ -131,7 +131,7 @@
             Name:
             &lt;input ng-model="yourName">
         &lt;/label>
-        &lt;p>Hello {{yourName}}</p>
+        &lt;p>Hello {{yourName}}&lt;/p>
     &lt;/body>
 &lt;/html>
                         </code></pre>
@@ -156,7 +156,7 @@
                                 <code>ng-model</code> attribute creates a 2-way data binding
                             </li>
                             <li>{{interpolated}} expressions create "watches"</li>
-                            <li>Scope!</li>
+                            <li>Scope</li>
                         </ul>
 
                         <aside class="notes">
@@ -199,8 +199,6 @@ var module = angular.module("MyApp", []);
                         <p>
                             The library exposes a single global object, "angular". We can use this to create new modules as shown. The name given to a module can then be used as the value of an "ng-app" directive. This will tell Angular what to actually do with the special elements and attributes it encounters within that DOM fragment.
                         </p>
-                        <p>
-                            Modules can "require" other modules
                     </aside>
                 </section>
 
@@ -212,6 +210,18 @@ var module = angular.module("MyApp", []);
                             <li>Attached to views via <code>ng-controller</code> directive</li>
                             <li>Directive introduces new scope to augment</li>
                         </ul>
+
+                        <aside class="note">
+                            <p>
+                                Controllers in Angular are used to augment scopes with state and behaviour. If you wanted a model to have an initial value, you would set it in the controller. If you want a method available to a certain scope, you declare it in the controller.
+                            </p>
+                            <p>
+                                Just like the "ng-app" directive, we attach controllers to the DOM via an "ng-controller" directive. Controllers can be inherited by nesting elements with ng-controller directives.
+                            </p>
+                            <p>
+                                Every time you use the ng-controller directive, Angular will create a new scope. Again, this works well when it comes to modularity.
+                            </p>
+                        </aside>
                     </section>
                     <section>
                         <h2>Adding behaviour to our demo</h2>
@@ -332,9 +342,25 @@ angular.module("MyApp", []).directive("loginForm", function () {
                     <h2>Other highlights</h2>
                     <ul>
                         <li>The <code>$location</code> service</li>
+                        <li>Bundled jQuery Lite (no dependencies)</li>
                         <li>Various utility methods e.g. <code>angular.copy</code></li>
                         <li>Promises (the <code>$q</code> service)</li>
+                        <li>Encourages unit testing</li>
                     </ul>
+
+                    <aside class="notes">
+                        <p>
+                            I could go on for a couple of hours in detail about all of the features offered by Angular, but I don't have time for that. So here's a very brief overview of some of the standout items.
+                        </p>
+                        <p>
+                            Since Angular is geared towards single-page app development, it needs a good browser history management solution, and it has one, in the form of the "$location" service. It has no dependencies, unlike e.g. Backbone, and has a trimmed down version of jQuery built-in, to help with basic DOM manipulation where necessary (although it abstracts most of that away).
+                        </p>
+                        <p>
+                            A personal favourite of mine is the way Angular provides wrappers around native asynchronous functions and allows you to take advantage of promises, using a version of the Q library, which means it actually adheres to the Promises/A+ spec and is nicely lined up to make the switch to ES6 in the future.
+                        </p>
+                        <p>
+                            And on top of all this, Angular encourages you to write in a way that makes it easy to unit test your front-end. This is something that really doesn't happen enough, and in my opinion anything that encourages you to test your code is a good thing.
+                        </p>
                 </section>
 
                 <section>
@@ -342,6 +368,7 @@ angular.module("MyApp", []).directive("loginForm", function () {
                     <ul>
                         <li>Voting for v2 features</li>
                         <li>HTML <code>&lt;template&gt;</code> element</li>
+                        <li>Better documentation (much needed!)</li>
                     </ul>
                 </section>
 
